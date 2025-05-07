@@ -10,10 +10,18 @@ router.post("/signup", async (req, res) => {
     if (!user) user = await User.create({ phone });
     const twilioResponse = await sendOTP(phone);
     console.log("OTP sent via Twilio:", twilioResponse);
-    res.status(200).json({ success: true, message: "OTP sent", data: twilioResponse });
+    res
+      .status(200)
+      .json({ success: true, message: "OTP sent", data: twilioResponse });
   } catch (err) {
     console.error("Error sending OTP:", err);
-    res.status(500).json({ success: false, message: "Failed to send OTP", error: err.message });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Failed to send OTP",
+        error: err.message,
+      });
   }
 });
 
@@ -38,7 +46,10 @@ router.post("/complete-profile", async (req, res) => {
   const { phone, aadhaar, email } = req.body;
   try {
     const user = await User.findOne({ phone });
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     user.aadhaar = aadhaar;
     user.email = email;
     await user.save();
@@ -53,7 +64,10 @@ router.get("/me", async (req, res) => {
   const { phone } = req.query;
   try {
     const user = await User.findOne({ phone });
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     res.json({ success: true, user });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
