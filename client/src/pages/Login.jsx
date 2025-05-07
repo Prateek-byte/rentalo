@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { Form, Button, Card } from "react-bootstrap";
 
 export default function Login() {
   const [phone, setPhone] = useState("");
@@ -14,13 +15,25 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={submit}>
-      <input
-        placeholder="Phone"
-        onChange={(e) => setPhone(e.target.value)}
-        required
-      />
-      <button type="submit">Send OTP</button>
-    </form>
+    <Card className="mx-auto" style={{ maxWidth: "400px" }}>
+      <Card.Body>
+        <Card.Title>Login</Card.Title>
+        <Form onSubmit={submit}>
+          <Form.Group className="mb-3" controlId="phone">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit" className="w-100">
+            Send OTP
+          </Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
