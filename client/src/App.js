@@ -1,12 +1,44 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import VerifyOTP from "./pages/VerifyOTP";
-import Home from "./pages/Home";
 import BuyRentSell from "./pages/BuyRentSell";
 import HireWorker from "./pages/HireWorker";
-import { Navbar, Nav, Container } from 'react-bootstrap';
+// TODO: create Rooms page component
 
-function App() {
+// Animation wrapper for pages
+const pageTransition = { duration: 0.5 };
+const AnimatedPage = ({ children, ...props }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={pageTransition}
+    {...props}
+  >
+    {children}
+  </motion.div>
+);
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
+        <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
+        <Route path="/verify" element={<AnimatedPage><VerifyOTP /></AnimatedPage>} />
+        <Route path="/market" element={<AnimatedPage><BuyRentSell /></AnimatedPage>} />
+        <Route path="/workers" element={<AnimatedPage><HireWorker /></AnimatedPage>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+export default function App() {
   return (
     <BrowserRouter>
       <Navbar bg="primary" variant="dark">
@@ -23,17 +55,13 @@ function App() {
         </Container>
       </Navbar>
       <Container className="mt-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/verify" element={<VerifyOTP />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/market" element={<BuyRentSell />} />
-          <Route path="/workers" element={<HireWorker />} />
-        </Routes>
+        <AnimatedRoutes />
       </Container>
+      <Navbar fixed="bottom" bg="light" className="justify-content-center">
+        <Nav>
+          <Nav.Item className="text-muted">© 2025 Rentalo</Nav.Item>
+        </Nav>
+      </Navbar>
     </BrowserRouter>
   );
 }
-
-export default App;
