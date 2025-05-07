@@ -1,13 +1,13 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function HireWorker() {
   const nav = useNavigate();
   const categories = [
-    { name: 'Electrician', path: '/workers/electrician' },
-    { name: 'Plumber',     path: '/workers/plumber' },
-    { name: 'Mechanic',    path: '/workers/mechanic' },
+    { name: "Electrician", path: "/workers/electrician" },
+    { name: "Plumber", path: "/workers/plumber" },
+    { name: "Mechanic", path: "/workers/mechanic" },
     // ...existing code... for additional categories
   ];
 
@@ -15,7 +15,7 @@ export default function HireWorker() {
     <Container className="mt-4">
       <h2 className="mb-4 text-center">Hire Workers</h2>
       <Row xs={1} md={3} className="g-4">
-        {categories.map(cat => (
+        {categories.map((cat) => (
           <Col key={cat.name}>
             <Card className="h-100 text-center">
               <Card.Body>
