@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import VerifyOTP from "./pages/VerifyOTP";
 import BuyRentSell from "./pages/BuyRentSell";
 import HireWorker from "./pages/HireWorker";
+import PrivateRoute from "./components/PrivateRoute";
 // TODO: create Rooms page component
 
 // Animation wrapper for pages
@@ -61,17 +62,21 @@ function AnimatedRoutes() {
         <Route
           path="/market"
           element={
-            <AnimatedPage>
-              <BuyRentSell />
-            </AnimatedPage>
+            <PrivateRoute>
+              <AnimatedPage>
+                <BuyRentSell />
+              </AnimatedPage>
+            </PrivateRoute>
           }
         />
         <Route
           path="/workers"
           element={
-            <AnimatedPage>
-              <HireWorker />
-            </AnimatedPage>
+            <PrivateRoute>
+              <AnimatedPage>
+                <HireWorker />
+              </AnimatedPage>
+            </PrivateRoute>
           }
         />
       </Routes>
@@ -96,38 +101,6 @@ export default function App() {
             </Nav>
           </Container>
         </Navbar>
-        {/* Hero Banner */}
-        <Container fluid className="p-0">
-          <div
-            className="position-relative w-100"
-            style={{
-              backgroundImage:
-                'url("https://source.unsplash.com/random/1600x400?nature,rental")',
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              height: "300px",
-            }}
-          >
-            <div className="position-absolute top-50 start-50 translate-middle text-white text-center">
-              <motion.h2
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-                className="display-5"
-              >
-                Discover Your Next Rental
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="lead"
-              >
-                Browse properties, services, and more—all in one place.
-              </motion.p>
-            </div>
-          </div>
-        </Container>
         <Container className="flex-grow-1 mt-2">
           <AnimatedRoutes />
         </Container>
